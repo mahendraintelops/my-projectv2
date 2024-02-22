@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: MyService
+  name: MyService
+  labels:
+    app: MyService
+spec:
+  selector:
+    matchLabels:
+      app: MyService
+  template:
+    metadata:
+      labels:
+        app: MyService
+        name: MyService
+    spec:
+      containers:
+        - name: MyService
+          image: mahendraintelops/my-projectv2/MyService
+          imagePullPolicy: Always
+          ports:
+        
+          - containerPort: 4500
+            name: http
+        
+        
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+        
